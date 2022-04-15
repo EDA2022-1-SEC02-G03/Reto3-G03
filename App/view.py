@@ -55,7 +55,7 @@ def printMenu():
     print("Bienvenido")
     print("1- Inicializar Analizador")
     print("2- Cargar información de jugadores")
-    print("3-")
+    print("3- Cargar avance Requerimiento 1")
     print("4-")
     print("0- Salir")
     print("*******************************************")
@@ -73,7 +73,7 @@ while True:
         # cont es el controlador que se usará de acá en adelante
         cont = controller.init()
 
-    elif int(inputs[0]) == 2:
+    elif int(inputs[0]) == 3:
         print("\nCargando información de jugadores ....")
         controller.loadData(cont, playersfile)
         print('Jugadores cargados: ' + str(controller.crimesSize(cont)))
