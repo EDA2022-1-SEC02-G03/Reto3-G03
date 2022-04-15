@@ -21,18 +21,82 @@
  """
 
 import config as cf
-import model
+from App import model
 import csv
 
+csv.field_size_limit(2147483647)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
-# Inicialización del Catálogo de libros
+# ___________________________________________________
+#  Inicializacion del catalogo
+# ___________________________________________________
 
-# Funciones para la carga de datos
+
+def init():
+    """
+    Llama la funcion de inicializacion  del modelo.
+    """
+    # catalog es utilizado para interactuar con el modelo
+    analyzer = model.newAnalyzer()
+    return analyzer
+
+
+# ___________________________________________________
+#  Funciones para la carga de datos y almacenamiento
+#  de datos en los modelos
+# ___________________________________________________
+
+def loadData(analyzer, playersfile):
+    """
+    Carga los datos de los archivos CSV en el modelo
+    """
+    playersfile = cf.data_dir + playersfile
+    input_file = csv.DictReader(open(playersfile, encoding="utf-8"),
+                                delimiter=",")
+    for player in input_file:
+        model.addPlayer(analyzer, player)
+    return analyzer
 
 # Funciones de ordenamiento
 
-# Funciones de consulta sobre el catálogo
+# ___________________________________________________
+#  Funciones para consultas
+# ___________________________________________________
+
+
+def crimesSize(analyzer):
+    """
+    Numero de crimenes leidos
+    """
+    return model.crimesSize(analyzer)
+
+
+def indexHeight(analyzer):
+    """
+    Altura del indice (arbol)
+    """
+    return model.indexHeight(analyzer)
+
+
+def indexSize(analyzer):
+    """
+    Numero de nodos en el arbol
+    """
+    return model.indexSize(analyzer)
+
+
+def minKey(analyzer):
+    """
+    La menor llave del arbol
+    """
+    return model.minKey(analyzer)
+
+
+def maxKey(analyzer):
+    """
+    La mayor llave del arbol
+    """
+    return model.maxKey(analyzer)

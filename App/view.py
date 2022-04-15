@@ -22,10 +22,12 @@
 
 import config as cf
 import sys
-import controller
+from App import controller
 from DISClib.ADT import list as lt
 assert cf
 
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 
 """
 La vista se encarga de la interacción con el usuario
@@ -34,24 +36,51 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
-def printMenu():
-    print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+# ___________________________________________________
+#  Ruta a los archivos
+# ___________________________________________________
 
-catalog = None
+
+playersfile = 'fifa-players-2022-utf8-small.csv'
+cont = None
+
+
+# ___________________________________________________
+#  Menu principal
+# ___________________________________________________
+
+def printMenu():
+    print("\n")
+    print("*******************************************")
+    print("Bienvenido")
+    print("1- Inicializar Analizador")
+    print("2- Cargar información de jugadores")
+    print("3-")
+    print("4-")
+    print("0- Salir")
+    print("*******************************************")
+
 
 """
 Menu principal
 """
+
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+        print("\nInicializando....")
+        # cont es el controlador que se usará de acá en adelante
+        cont = controller.init()
 
     elif int(inputs[0]) == 2:
-        pass
+        print("\nCargando información de jugadores ....")
+        controller.loadData(cont, playersfile)
+        print('Jugadores cargados: ' + str(controller.crimesSize(cont)))
+        print('Altura del arbol: ' + str(controller.indexHeight(cont)))
+        print('Elementos en el arbol: ' + str(controller.indexSize(cont)))
+        print('Menor Llave: ' + str(controller.minKey(cont)))
+        print('Mayor Llave: ' + str(controller.maxKey(cont)))
 
     else:
         sys.exit(0)
